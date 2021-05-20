@@ -8,7 +8,7 @@ interface CountDownProps {
   shouldReset?: boolean;
 }
 
-export default function CountDown(props: CountDownProps): JSX.Element {
+export default function Countdown(props: CountDownProps): JSX.Element {
   const { timeOut = 2, executeOnEnd, className = '', shouldReset } = props;
 
   const [minutes, setMinutes] = useState<StrType>(0);
