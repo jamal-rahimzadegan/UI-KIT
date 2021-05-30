@@ -1,2 +1,2 @@
 # Kit
-Some reusable UI components (fro ReactJS)
+Some reusable UI components
