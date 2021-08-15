@@ -1,2 +1,2 @@
-# <img src= "./bag-logo.png" height="20px" width="40px" /> Kit 
+# Kit <img src= "./bag-logo.png"  height="40px" />
 Some reusable UI components
