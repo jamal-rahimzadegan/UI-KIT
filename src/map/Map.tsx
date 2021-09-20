@@ -1,6 +1,6 @@
 import React from 'react';
 import { TileLayer } from 'react-leaflet';
-import { MarkerType } from 'types';
+import { MarkerType } from 'types'; // MarkerType=[lat: number, lng: number]
 import { MapStyle } from './MapStyle';
 import MapMarker from './MapMarker';
 
