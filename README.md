@@ -14,6 +14,6 @@
 - `Input` &mdash; Highly customziable with mulitle support
 - `Txt` &mdash; Custom text which you can pass the tag as props to it 
 - `Carousel` &mdash; Nice and pure component with bullets and touch support
-- `Map` &mdash; Reuasable map component whitch marker (using React-Leaflet)
+- `Map` &mdash; Reusable map component whitch marker (using React-Leaflet)
 
 
