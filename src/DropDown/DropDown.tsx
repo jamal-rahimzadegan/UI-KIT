@@ -1,95 +1,62 @@
-import React, { useEffect, useState } from 'react';
-import { Text, Btn } from '../index';
-import anime from 'animejs';
-import { StyledDropDownItemsWrapper } from './DropDownStyle';
+import React, { useState } from 'react';
+import { Btn, Hr, Txt } from 'components';
+import { useClickOutside } from 'hooks';
+import { ComplexObject } from 'types';
+import { ItemsContainer, StyledDropDown } from './DropDownStyle';
 
-type DropDownType = {
-  items: object[] | any;
-  selectedItem: object | any;
-  setSelectedItem: Function;
+interface Props {
+  items: ComplexObject[];
+  defaultTitle?: string;
+  onChange: Function;
   width: string;
-  titleFontSize: string;
-  titleDefaultText: string;
-};
+  id: string;
+}
 
-export default function DropDown(props: DropDownType): JSX.Element {
-  const { items, selectedItem, setSelectedItem, width, titleFontSize, titleDefaultText } = props;
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+export default function DropDown(props: Props): JSX.Element {
+  const { items, onChange, width, id, defaultTitle } = props;
+  const [isOpen, setIsOpen] = useState<boolean>(null);
+  const [selectedItem, setSelectedItem] = useState<string>('');
 
-  const toggleDropDown = (type) => {
-    if (type === 'open') {
-      setIsOpen(true);
-      anime({
-        targets: '#dropDownItemsWrapper',
-        height: [0, '200px'],
-        delay: 0,
-        easing: 'easeInOutExpo',
-        duration: 400,
-      });
-    }
+  useClickOutside({
+    id,
+    isActive: isOpen,
+    close: () => setIsOpen(false),
+  });
 
-    if (type === 'close') {
-      setIsOpen(false);
-      anime({
-        targets: '#dropDownItemsWrapper',
-        height: ['200px', 0],
-        delay: 0,
-        easing: 'easeInOutExpo',
-        duration: 400,
-      });
-    }
+  const handleTitle = () => {
+    if (selectedItem) return selectedItem;
+    else if (defaultTitle) return defaultTitle;
+    else return 'انتخاب';
   };
 
-  const closeDropDown = (event) => {
-    !event.target.closest('#dropDownItemsWrapper') && isOpen ? toggleDropDown('close') : null;
+  const pickItem = (target) => {
+    onChange(target);
+    setSelectedItem(target.value);
+    setIsOpen(false);
   };
-
-  const handleClick = (item) => {
-    if (selectedItem.key !== item.key) setSelectedItem(item);
-    toggleDropDown('close');
-  };
-
-  const handleDefaultValue = () => {
-    // if (selectedItem) return selectedItem.value;
-    // if (items?.length) return items[0].value;
-    // //else if (defaultValue) return defaultValue.value;
-    // else return 'global.select';
-  };
-
-  useEffect(() => {
-    if (isOpen) document.addEventListener('click', closeDropDown);
-    return () => document.removeEventListener('click', closeDropDown);
-  }, [isOpen]);
 
   return (
-    <>
+    <StyledDropDown isOpen={isOpen} width={width} className="position-relative">
       <Btn
-        type="info-transparent"
-        className="border-0 w-100 justify-content-center py-2 d-flex align-items-center"
-        onClick={() => toggleDropDown('open')}
+        textColor="PRIMARY_TEXT"
+        bgColor="LIGHT_BLOCK_BG"
+        hasRadius={false}
+        className="py-3 overflow-hidden"
+        width="inherit"
+        onClick={() => setIsOpen(true)}
       >
-        {/*<Icon name={`arrow-${isOpen ? 'up' : 'down'}`} color="textPrimary" size="18" />*/}
-        <Text size="m">{titleDefaultText}</Text>
+        <Txt numberOfLines="1">{handleTitle()}</Txt>
       </Btn>
-      <StyledDropDownItemsWrapper
-        width={width}
-        id="dropDownItemsWrapper"
-        type="hrBorder"
-        className="position-absolute overflow-auto"
-      >
+      <ItemsContainer isOpen={isOpen}>
         {items.map((item) => (
-          <Btn
-            key={item.key}
-            type="info-transparent"
-            className="border-0 w-100 justify-content-start d-flex px-3 py-2"
-            onClick={() => handleClick(item)}
-          >
-            <Text size="s" color="PRIMARY_TEXT" className="text-nowrap">
+          <Btn isTransparent key={item.key} className="w-100" onClick={() => pickItem(item)}>
+            <Txt size="s" color="PRIMARY_TEXT" numberOfLines="1">
               {item.value}
-            </Text>
+            </Txt>
+            <Hr />
           </Btn>
         ))}
-      </StyledDropDownItemsWrapper>
-    </>
+      </ItemsContainer>
+    </StyledDropDown>
   );
 }
