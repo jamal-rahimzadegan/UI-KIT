@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useGetDevice } from 'hooks';
-import { ArrowBtn, BulletContainer, BulletItem, CarouselContainer, Slide } from 'components/Carousel/CarouselStyle';
+import { ArrowBtn, BulletContainer, BulletItem, CarouselContainer, Slide } from './CarouselStyle';
 
 let touchStartPos = 0;
 let touchStopPos = 0;
