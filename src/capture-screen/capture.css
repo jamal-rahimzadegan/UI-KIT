@@ -1,0 +1,28 @@
+#capture-btn {
+  background: blanchedalmond;
+  border-radius: 5px;
+  text-decoration: none;
+  width: 150px;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+}
+
+#video-canvas {
+  display: none;
+}
+
+#video {
+  margin: 10px;
+  border-radius: 5px;
+  height: 360px;
+  width: 640px;
+  object-fit: cover;
+}
+
+.preview-img {
+  border-radius: 5px;
+  object-fit: cover;
+  height: 360px;
+  width: 640px;
+}
