@@ -1,30 +1,35 @@
-import React from 'react';
-import { FnType } from 'types';
-import { Txt } from 'components';
-import { FONT_SIZES } from 'constant';
-import { LIGHT_THEME } from 'assets/style/theme';
-import { CheckBoxContainer } from './CheckBoxStyle';
+ import { ChangeEvent, useState } from 'react'
 
-interface CheckBoxType {
-  isChecked?: boolean;
-  onChangeFn: FnType;
-  key?: string | number;
-  label: string;
-  labelColor?: keyof typeof LIGHT_THEME;
-  labelSize?: keyof typeof FONT_SIZES;
+type CheckBox = React.DetailedHTMLProps<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>
+
+interface Props extends CheckBox {
+  label: string
 }
 
-export default function CheckBox(props: CheckBoxType): JSX.Element {
-  const { label, isChecked, onChangeFn, key, labelSize, labelColor } = props;
+function Checkbox(props: Props): JSX.Element {
+  const { label, checked, onChange, ...restProps } = props
+  const defaultChecked: boolean = checked ? checked : false
+  const [isChecked, setIsChecked] = useState<boolean>(defaultChecked)
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIsChecked((prev) => !prev)
+    onChange?.(e)
+  }
 
   return (
-    <CheckBoxContainer key={key} className="checkbox my-2">
-      <label className="small d-flex align-items-center">
-        <input className="mx-1 my-0" type="checkbox" checked={isChecked} onChange={(e) => onChangeFn(e)} />
-        <Txt color={labelColor} size={labelSize}>
-          {label}
-        </Txt>
+    <CheckBoxContainer>
+      <label>
+        <input
+          type='checkbox'
+          checked={isChecked}
+          onChange={handleChange}
+          {...restProps}
+        />
+        <span>{label}</span>
       </label>
     </CheckBoxContainer>
-  );
+  )
 }
