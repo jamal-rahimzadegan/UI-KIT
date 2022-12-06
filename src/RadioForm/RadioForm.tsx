@@ -13,26 +13,35 @@ import { RadioContainer } from './RadioFormStyle';
  */
 
 interface Props {
-  data: ComplexObject[];
-  onChangeFn: FnType;
-  labelColor?: keyof typeof LIGHT_THEME;
-  labelSize?: keyof typeof FONT_SIZES;
-  className?: string;
+  data: Record<string, any>[]
+  onChange: Function
+  className?: string
+  labelColor?: keyof typeof LIGHT_THEME
+  labelSize?: keyof typeof FONT_SIZES
 }
 
 export default function RadioForm(props: Props): JSX.Element {
-  const { data, onChangeFn, labelSize, labelColor, className } = props;
+  const { data, onChange, labelSize, labelColor, className = '' } = props
 
-  const renderBoxList = () => (
-    <form className={className || ''}>
+  const renderFormList = () => (
+    <form className={className}>
       {data.map(({ value, label }) => (
-        <RadioContainer key={value} labelSize={labelSize} labelColor={labelColor}>
-          <input value={value} type="radio" name="radio-item" onChange={(e) => onChangeFn(e.target.value)} />
+        <RadioContainer
+          key={value}
+          labelSize={labelSize}
+          labelColor={labelColor}
+        >
+          <input
+            value={value}
+            type='radio'
+            name='radio-item'
+            onChange={(e) => onChange(e.target.value)}
+          />
           <label>{label}</label>
         </RadioContainer>
       ))}
     </form>
-  );
+  )
 
-  return <>{data?.length ? renderBoxList() : null}</>;
+  return <>{data?.length ? renderFormList() : null}</>
 }
