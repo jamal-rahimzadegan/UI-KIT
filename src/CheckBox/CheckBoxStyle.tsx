@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from 'styled-components'
 
 export const CheckBoxContainer = styled.div`
   input[type='checkbox']:focus {
@@ -6,8 +6,9 @@ export const CheckBoxContainer = styled.div`
   }
 
   input[type='checkbox'] {
+    margin: 0 4px 0 0;
     background-color: #ddd;
-    border-radius: 17px;
+    border-radius: 4px;
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -18,8 +19,25 @@ export const CheckBoxContainer = styled.div`
   }
 
   input[type='checkbox']:checked {
-    background: ${(props) => props.theme.APP}
-      url('data:image/gif;base64,R0lGODlhCwAKAIABAP////3cnSH5BAEKAAEALAAAAAALAAoAAAIUjH+AC73WHIsw0UCjglraO20PNhYAOw==')
-      no-repeat 3px 3px;
+    background: navy;
   }
-`;
+
+  input[type='checkbox']:checked::after {
+    content: '✔';
+    font-size: 1rem;
+    color: #fff;
+    position: absolute;
+    bottom: -1px;
+    right: 1px;
+  }
+
+  input[type='checkbox']:disabled {
+    border-color: #c0c0c0;
+    background-color: #c0c0c0;
+    cursor: default;
+  }
+
+  input[type='checkbox']:disabled + span {
+    color: #c0c0c0;
+  }
+`
