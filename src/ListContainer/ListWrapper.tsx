@@ -1,27 +1,35 @@
-import React from 'react';
-import { Text } from 'components';
 
-interface ListWrapperProps {
-  hasData: boolean;
-  hasErr?: boolean;
-  isLoading?: boolean;
-  children?: React.ReactNode;
-  errMsg?: string;
-  loadingMsg?: string;
-  emptyMsg?: string;
+import React, { ReactChildren, ReactNode } from 'react'
+
+interface Props<T = any[]> {
+  testId?: string
+  isLoading?: boolean
+  isEmpty?: boolean
+  emptyMsg?: string
+  error?: boolean
+  className?: string
+  data: T
+  children?: Element | ReactNode | JSX.Element | ReactChildren
 }
 
-export default function ListWrapper(props: ListWrapperProps): JSX.Element {
-  const { children, hasData, hasErr, isLoading, errMsg, loadingMsg, emptyMsg } = props;
+type ContentProps = Omit<Props, 'testId' | 'className'>
 
-  const Msg = ({ body }) => {
-    return <Text className="text-black-50 mt-2 w-100 text-center">{body}</Text>;
-  };
+const RenderContent = (props: ContentProps): JSX.Element => {
+  const { children, data, isLoading = true, error, emptyMsg, isEmpty } = props
 
-  if (isLoading) return <Msg body={loadingMsg ?? 'Loading...'} />;
+  if (isLoading) return <p>Loading...</p>
+  else if (data.length) return <>{children}</>
+  else if (isEmpty) return <p>{emptyMsg}</p>
+  else if (error) return <p>Something Went Wrong</p>
+  else return <></>
+}
 
-  if (hasErr) return <Msg body={errMsg ?? 'Error'} />;
+export default function List(props: Props): JSX.Element {
+  const { testId, className = '', ...restProps } = props
 
-  if (hasData && !!children) return <>{children}</>;
-  else return <Msg body={emptyMsg ?? 'there is no item'} />;
+  return (
+    <div data-testid={testId} className={className}>
+      {<RenderContent {...restProps} />}
+    </div>
+  )
 }
