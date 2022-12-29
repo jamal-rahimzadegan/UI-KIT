@@ -65,7 +65,7 @@ export default function Input(props: InputProps): JSX.Element {
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      !!onEnterPress && onEnterPress();
+      onEnterPress?.();
     }
   };
 
