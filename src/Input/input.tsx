@@ -1,117 +1,95 @@
-import React from 'react';
-import { InpTypes } from 'types';
-import { BORDER_RADIUS } from 'constant';
-import { InputContainer, LabelStyle, StyledInput, StyledTextArea } from './InputStyle';
-import { kMaxLength } from 'buffer';
+import { ChangeEvent, InputHTMLAttributes } from "react";
+import { InputContainer, StyledInput, StyledTextArea } from "./style";
 
-interface InputProps {
-  name?: string;
-  width?: string;
-  height?: string;
-  defaultValue?: string | number;
-  disabled?: boolean;
-  value?: string;
-  SideIcon?: Function;
-  onEnterPress?: Function;
-  onChange?: Function;
-  className?: string;
-  wrapperClassName?: string;
-  placeholder?: string;
-  bgColor?: string;
-  type?: InpTypes;
-  maxLength?: string;
-  borderColor?: string;
-  sideBtnColor?: string;
+interface InputProps extends InputHTMLAttributes<any> {
+  testId?: string;
+  Icon?: any;
   label?: string;
-  containerClassName?: string;
-  labelColor?: string;
+  contentClassName?: string;
   multiLine?: boolean;
   rows?: number;
   cols?: number;
-  textColor?: string;
-  borderRadius?: keyof typeof BORDER_RADIUS;
-  id?: string;
-  autocomplete?: 'on' | 'off';
   ref?: (input: HTMLInputElement | null) => void;
+  clearValue?: Function;
 }
 
 export default function Input(props: InputProps): JSX.Element {
   const {
+    testId,
     ref,
     id,
-    SideIcon,
+    Icon,
     height,
     width,
-    onEnterPress,
+    onSubmit,
     className,
-    wrapperClassName,
-    label = '',
+    label = "",
     multiLine = false,
-    labelColor,
-    containerClassName,
+    contentClassName,
     placeholder,
     rows = 4,
     cols = 40,
-    borderRadius,
     disabled,
     value,
-    bgColor = 'INPUT_BG',
-    textColor = 'PRIMARY_TEXT',
     onChange,
-    autocomplete = 'off',
     ...restProps
   } = props;
 
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      onEnterPress?.();
-    }
+  const HAS_HTML = /<\/?[a-z][\s\S]*>/i;
+
+  const sanitizeInput = (inpTxt: string): string => {
+    //  NOTE: You can move it to utils
+    if (!HAS_HTML.test(inpTxt)) return inpTxt;
+    console.error("Your input is not valid");
+    return "";
+  };
+
+  const handleKeyPress = (e: ChangeEvent) => {
+    e.preventDefault();
+    onSubmit?.(e);
+  };
+
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!sanitizeInput(e.target.value)) return;
+    onChange?.(e);
   };
 
   return (
-    <div className={wrapperClassName}>
-      {label ? <LabelStyle labelColor={labelColor}>{label}</LabelStyle> : null}
-      <InputContainer
-        disabled={disabled}
-        bgColor={bgColor}
-        height={height}
-        width={width}
-        borderRadius={borderRadius}
-        className={'d-flex align-items-center justify-content-between w-100 ' + containerClassName}
-      >
-        {multiLine ? (
-          <StyledTextArea
-            autocomplete={autocomplete}
-            textColor={textColor}
+    <InputContainer
+      onSubmit={handleKeyPress}
+      data-testid={testId}
+      disabled={disabled}
+      height={height}
+      width={width}
+      className={className}
+    >
+      {multiLine ? (
+        <StyledTextArea
+          data-testid={testId}
+          placeholder={placeholder}
+          className={contentClassName}
+          rows={rows}
+          onChange={handleOnChange}
+          cols={cols}
+          id={id}
+          value={value}
+          {...restProps}
+        />
+      ) : (
+        <>
+          {Icon ? <Icon /> : null}
+          <StyledInput
+            id={id}
+            data-testid={testId}
+            ref={ref}
             placeholder={placeholder}
-            onKeyDown={handleKeyPress}
-            className={className}
-            rows={rows}
-            onChange={onChange}
-            cols={cols}
+            className={contentClassName}
+            onChange={handleOnChange}
             value={value}
-            borderRadius={borderRadius}
             {...restProps}
           />
-        ) : (
-          <>
-            <StyledInput
-              ref={ref}
-              autocomplete={autocomplete}
-              textColor={textColor}
-              borderRadius={borderRadius}
-              placeholder={placeholder}
-              className={className}
-              onChange={onChange}
-              value={value}
-              onKeyDown={handleKeyPress}
-              {...restProps}
-            />
-            {SideIcon ? <SideIcon /> : null}
-          </>
-        )}
-      </InputContainer>
-    </div>
+        </>
+      )}
+    </InputContainer>
   );
 }
