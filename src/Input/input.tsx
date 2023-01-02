@@ -1,4 +1,5 @@
 import { ChangeEvent, InputHTMLAttributes } from "react";
+import validationService, { Validationtype } from "./validation-service"; // pass your validation service
 import { InputContainer, StyledInput, StyledTextArea } from "./style";
 
 interface InputProps extends InputHTMLAttributes<any> {
@@ -11,6 +12,7 @@ interface InputProps extends InputHTMLAttributes<any> {
   cols?: number;
   ref?: (input: HTMLInputElement | null) => void;
   clearValue?: Function;
+  validation: keyof Validationtype;
 }
 
 export default function Input(props: InputProps): JSX.Element {
@@ -35,22 +37,12 @@ export default function Input(props: InputProps): JSX.Element {
     ...restProps
   } = props;
 
-  const HAS_HTML = /<\/?[a-z][\s\S]*>/i;
-
-  const sanitizeInput = (inpTxt: string): string => {
-    //  NOTE: You can move it to utils
-    if (!HAS_HTML.test(inpTxt)) return inpTxt;
-    console.error("Your input is not valid");
-    return "";
-  };
-
-  const handleKeyPress = (e: ChangeEvent) => {
-    e.preventDefault();
-    onSubmit?.(e);
+    const validateInput = (txt: string): boolean => {
+    return validationService[validation](txt);
   };
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!sanitizeInput(e.target.value)) return;
+    if (!validateInput(e.target.value)) return console.error("Wrong Input");
     onChange?.(e);
   };
 
