@@ -3,7 +3,7 @@ interface Props {
   caption: string;
 }
 
-function Figure(props: Props) {
+export default function Figure(props: Props) {
   const { imgSrc, caption } = props;
 
   return (
