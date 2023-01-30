@@ -1,15 +1,13 @@
-import styled, { css } from 'styled-components';
-import { FONT_SIZES } from 'constant';
+// @ts-nocheck
 
-export const StyledText = styled.p`
-  font-weight: ${({ isBold }) => (isBold ? 'bolder' : 'unset')};
-  margin: 0;
-  text-align: ${(props) => (props.align ? props.align : null)};
-  font-weight: ${(props) => props.weight};
-  font-size: ${(props) => FONT_SIZES[props.size || 'm']};
-  //font-size: calc(15px + (15 - 15) * (100vw - 320px) / (768 - 320)); //*
-  color: ${({ theme, color }) => theme[color || 'PRIMARY_TEXT']};
-  text-decoration: ${({ hasDecoration }) => (hasDecoration ? 'underline' : null)};
+import styled, { css } from "styled-components";
+// import { FONT_SIZES } from "SIZES";
+
+// FIXME: types
+const TextWrapper = styled.p<any>`
+  font-size: ${(props) => FONT_SIZES[props.size || "m"]};
+  color: ${({ theme, color }) => theme[color || "PRIMARY_TEXT"]};
+  text-align: ${({ align }) => align || null};
 
   ${(props) =>
     props.numberOfLines
@@ -21,5 +19,7 @@ export const StyledText = styled.p`
           text-overflow: ellipsis;
           -webkit-box-orient: vertical;
         `
-      : ''};
+      : ""};
 `;
+
+export default TextWrapper;
