@@ -1,3 +1,5 @@
+import {Loading} from "./style"
+
 interface props {
     bgColor?: keyof typeof YOUR_THEME;
     rippleColor?: keyof typeof YOUR_THEME;
