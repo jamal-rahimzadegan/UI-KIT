@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToggleSwitchStyle } from './ToggleSwitchStyle';
+import { ToggleSwitchStyle } from './style';
 
 type ToggleSwitch = {
   onToggle: Function;
@@ -10,6 +10,7 @@ type ToggleSwitch = {
   checkedBg: string;
   children: React.ReactNode;
 };
+
 export default function ToggleSwitch(props: ToggleSwitch): JSX.Element {
   const { onToggle, height = 20, width = 40, bulletColor, bgColor, checkedBg, children } = props;
 
