@@ -1,3 +1,5 @@
+// check https://www.w3schools.com/html/html_lists.asp for more details
+
 import React, {ReactNode} from 'react'
 import Container from "./style";
 
@@ -9,7 +11,7 @@ interface Props<T = any[]> {
     error?: boolean
     className?: string
     data: T
-    as?: "ol" | "ul" | "dd"
+    as?: "ol" | "ul" | "dl"
     children?: Element | ReactNode | JSX.Element
 }
 
