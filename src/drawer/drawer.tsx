@@ -26,7 +26,7 @@ export default function Drawer(props: Props): JSX.Element {
     };
 
     return (
-        <D.Wrapper isOpen={isOpen}>
+        <D.Wrapper aria-expanded={isOpen}>
             <LinksList onSelect={handleSelect} links={CONSTANTS.LINKS}/>
         </D.Wrapper>
     );
@@ -34,12 +34,16 @@ export default function Drawer(props: Props): JSX.Element {
 
 function LinksList(props: LinkProps): JSX.Element {
     const {onSelect, links} = props
+    const currentRout = "/home" // NOTE: handle it as your need
+
+    const checkIsOnCurrentRoute = (route: string) => currentRout === route ? "page" : ""
 
     return (
         <D.LinksContainer>
-            {links.map(({cb, title}) => (
+            {links.map(({route, cb, title}) => (
                 <li>
-                    <D.Link onClick={() => onSelect(cb)}>{title}</D.Link>
+                    <D.Link aria-current={checkIsOnCurrentRoute(route)}
+                            onClick={() => onSelect(cb)}>{title}</D.Link>
                 </li>
             ))}
         </D.LinksContainer>
