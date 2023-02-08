@@ -5,7 +5,7 @@ export interface Props {
   handleVisibility: Function;
 }
 
-export default function Sidebar(props: Props): JSX.Element {
+export default function Drawer(props: Props): JSX.Element {
   const { isOpen, handleVisibility } = props;
   const isMobile = false; // you can add mobile view as well
 
