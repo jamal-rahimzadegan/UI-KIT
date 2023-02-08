@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Props } from "./sidebar";
+import { Props } from "./drawer";
 
-const Wrapper = styled.aside<Pick<Props, "isOpen">>`
+const Wrapper = styled.nav<Pick<Props, "isOpen">>`
   height: 100vh;
   width: 250px;
   background: grey;
