@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Props } from "./drawer";
+import {Props} from "./drawer";
 
 const Wrapper = styled.nav<Pick<Props, "isOpen">>`
   height: 100vh;
@@ -11,10 +11,18 @@ const Wrapper = styled.nav<Pick<Props, "isOpen">>`
   transition: left 250ms;
   border-radius: 0 10px 10px 0;
   padding: 10px;
-  box-shadow: 10px 2px 14px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 10px 2px 14px 0 rgba(0, 0, 0, 0.2);
 `;
 
-const SubMenu = styled.button`
+const LinksContainer = styled.ul`
+  list-style: none;
+
+  li {
+    margin: 20px 0;
+  }
+`
+
+const Link = styled.a`
   background: transparent;
   width: 100%;
   border: none;
@@ -23,6 +31,7 @@ const SubMenu = styled.button`
 `;
 
 export default {
-  Wrapper,
-  SubMenu,
+    Wrapper,
+    LinksContainer,
+    Link,
 };
