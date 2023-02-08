@@ -1,12 +1,11 @@
 import styled from "styled-components";
-import {Props} from "./drawer";
 
-const Wrapper = styled.nav<Pick<Props, "isOpen">>`
+const Wrapper = styled.nav`
   height: 100vh;
   width: 250px;
   background: grey;
   position: fixed;
-  left: ${(props: Props) => (props.isOpen ? "0" : "-100%")};
+  left: ${(props: any) => (props["aria-expanded"] ? "0" : "-100%")};
   top: 0;
   transition: left 250ms;
   border-radius: 0 10px 10px 0;
@@ -20,14 +19,15 @@ const LinksContainer = styled.ul`
   li {
     margin: 20px 0;
   }
+
+  [aria-current="page"] {
+    font-weight: bold;
+  }
 `
 
 const Link = styled.a`
-  background: transparent;
-  width: 100%;
-  border: none;
+  cursor: pointer;
   text-align: start;
-  font-weight: bold;
 `;
 
 export default {
