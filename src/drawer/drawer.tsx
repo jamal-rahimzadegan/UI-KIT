@@ -1,24 +1,47 @@
-import S from "./style";
+import D from "./style";
+import CONSTANTS from "./constants";
 
 export interface Props {
-  isOpen: boolean;
-  handleVisibility: Function;
+    isOpen: boolean;
+    toggleVisibility: Function;
+}
+
+interface LinkProps {
+    onSelect: (cb?: Function) => void
+    links: Links[]
+}
+
+export type Links = {
+    title: string,
+    route: string,
+    cb?: Function
 }
 
 export default function Drawer(props: Props): JSX.Element {
-  const { isOpen, handleVisibility } = props;
-  const isMobile = false; // you can add mobile view as well
+    const {isOpen, toggleVisibility} = props;
 
-  const handleClicks = (cb: Function) => {
-    handleVisibility();
-    cb?.();
-  };
+    const handleSelect = (cb?: Function) => {
+        toggleVisibility();
+        cb?.();
+    };
 
-  const goToHome = () => console.log(`---go home----> `);
+    return (
+        <D.Wrapper isOpen={isOpen}>
+            <LinksList onSelect={handleSelect} links={CONSTANTS.LINKS}/>
+        </D.Wrapper>
+    );
+}
 
-  return (
-    <S.Wrapper isOpen={isOpen}>
-      <S.SubMenu onClick={() => handleClicks(goToHome)}>Home</S.SubMenu>
-    </S.Wrapper>
-  );
+function LinksList(props: LinkProps): JSX.Element {
+    const {onSelect, links} = props
+
+    return (
+        <D.LinksContainer>
+            {links.map(({cb, title}) => (
+                <li>
+                    <D.Link onClick={() => onSelect(cb)}>{title}</D.Link>
+                </li>
+            ))}
+        </D.LinksContainer>
+    )
 }
