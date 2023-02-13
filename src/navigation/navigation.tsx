@@ -17,7 +17,7 @@ export type Links = {
     cb?: Function
 }
 
-export default function Drawer(props: Props): JSX.Element {
+export default function Navigation(props: Props): JSX.Element {
     const {isOpen, toggleVisibility} = props;
 
     const handleSelect = (cb?: Function) => {
