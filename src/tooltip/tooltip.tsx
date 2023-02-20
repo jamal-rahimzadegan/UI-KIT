@@ -4,18 +4,18 @@ interface Props {
   label: string;
   children: JSX.Element;
   place?: "top" | "right" | "bottom" | "left";
-  maxWidth?: string;
+  maxWidth?: number;
 }
 
 export default function Tooltip(props: Props): JSX.Element {
-  const { label, children, place = "right", maxWidth } = props;
+  const { label, children, place = "right", maxWidth = 120 } = props;
 
   return (
     <T.Wrapper>
       {children}
       <T.Text
         data-place={place}
-        data-maxWidth={maxWidth}
+        data-maxwidth={maxWidth}
         className="tooltip-text"
       >
         {label}
