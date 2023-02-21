@@ -1,8 +1,7 @@
-import styled, { css } from 'styled-components';
-import { BORDER_RADIUS } from 'constant';
+import styled from "styled-components";
 
-export const BackDrop = styled.div`
-  display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
+const BackDrop = styled.div`
+  display: ${(props: any) => (props.open ? "block" : "none")};
   z-index: 101;
   width: 100%;
   position: fixed;
@@ -12,11 +11,10 @@ export const BackDrop = styled.div`
   overflow: auto;
 `;
 
-export const ModalContainer = styled.div`
+const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: ${({ theme }) => theme.MODAL_BG};
-
+  background-color: rgba(0, 0, 0, 0.4);
   animation: fading 700ms forwards;
   @keyframes fading {
     0% {
@@ -28,12 +26,18 @@ export const ModalContainer = styled.div`
   }
 `;
 
-export const ModalBody = styled.div`
-  background-color: ${({ theme }) => theme.BACKGROUND};
+const ModalBody = styled.div`
+  background-color: grey;
   width: 70%; /* Width in proportion to its parent container*/
   max-width: 640px; /* Max width where it stops expanding */
   height: max-content; /* Height in proportion to its parent container */
   margin: auto; /* Auto margin according to the element width */
   padding: 10px;
-  border-radius: ${() => BORDER_RADIUS['s']};
+  border-radius: 8px;
 `;
+
+export default {
+  BackDrop,
+  ModalContainer,
+  ModalBody,
+};
