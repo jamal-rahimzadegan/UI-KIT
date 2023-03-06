@@ -3,8 +3,9 @@ import styled from "styled-components";
 const Wrapper = styled.section`
   display: flex;
   align-items: center;
-  
-  .badge-count {
+`;
+
+const BadgeText = styled.p`
     font-weight: bold;
     color: white;
     width: 30px;
@@ -15,7 +16,9 @@ const Wrapper = styled.section`
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-`;
+    `
 
-export default Wrapper
+export default {
+    Wrapper,
+    BadgeText
+}
