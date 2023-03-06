@@ -8,5 +8,5 @@ interface Props {
 
 export default function Badge(props: Props): JSX.Element {
     const {count, children} = props
-    return <Wrapper>{children}<p className="badge-count">{count}</p></Wrapper>
+    return <Wrapper>{children}<BadgeText>{count}</BadgeText></Wrapper>
 }
