@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import Container from "./style";
+import C from "./style";
 
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -15,14 +15,14 @@ export default function Checkbox(props: Props): JSX.Element {
   };
 
   return (
-    <Container>
-      <input
+    <C.Container>
+      <C.Box
         type="checkbox"
         defaultChecked={checked}
         onChange={handleChange}
         {...restProps}
       />
-      <span>{label}</span>
-    </Container>
+      <C.Label>{label}</C.Label>
+    </C.Container>
   );
 }
