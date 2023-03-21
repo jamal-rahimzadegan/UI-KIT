@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.6);
-  background: #1f1e1e;
+  background: black;
   color: white;
   width: 300px;
   height: 185px;
@@ -11,6 +11,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+
+  p {
+    opacity: 0.8;
+  }
 `
 
 const Header = styled.div`
@@ -19,13 +23,13 @@ const Header = styled.div`
   justify-content: space-between;
 `
 
-const ChipIcon = styled.img`
-  height: 30px;
-`
-
 const BankName = styled.p`
   font-size: 1.3rem;
   font-weight: bold;
+`
+
+const ChipIcon = styled.img`
+  height: 30px;
 `
 
 const Number = styled.p`
@@ -37,6 +41,7 @@ const HolderInfo = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 0.9rem;
 `
 
 const Holder = styled.p`
@@ -53,8 +58,8 @@ const ExpDate = styled.p`
 export default {
   Wrapper,
   Header,
-  ChipIcon,
   BankName,
+  ChipIcon,
   Number,
   HolderInfo,
   Holder,
