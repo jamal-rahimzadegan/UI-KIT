@@ -30,6 +30,7 @@ const BankName = styled.p`
 
 const Number = styled.p`
   font-size: 1.1rem;
+  margin-top: 35px;
 `
 
 const HolderInfo = styled.div`
