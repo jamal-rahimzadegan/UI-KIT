@@ -1,5 +1,5 @@
 import Card from './style'
-import ChipImg from './data/chip.png'
+import chipIcon from './data/chip.png'
 import formatCardNumber from './data/format-card-number' // You can use any file you prefer
 
 interface Props {
@@ -17,7 +17,7 @@ export default function CreditCard(props: Props): JSX.Element {
     <Card.Wrapper>
       <Card.Header>
         <Card.BankName>{bankName}</Card.BankName>
-        <Card.ChipIcon src={ChipImg} alt='chip' />
+        <Card.ChipIcon src={chipIcon} alt='chip' />
       </Card.Header>
       <Card.Number>{formatCardNumber(cardNumber)}</Card.Number>
       <Card.HolderInfo>
