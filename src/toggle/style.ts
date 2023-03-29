@@ -1,4 +1,3 @@
-// @ts-nocheck
 import styled, { css } from 'styled-components'
 
 export const Wrapper = styled.label`
@@ -20,7 +19,7 @@ export const Wrapper = styled.label`
     left: 0;
     right: 0;
     bottom: 0;
-    background: #2c3e50;
+    background: ${({ theme }) => theme.colors.mediumGrey};
     transition: 0.3s;
     border-radius: ${({ width }) => width}px;
   }
@@ -32,13 +31,13 @@ export const Wrapper = styled.label`
     height: ${({ height }) => height - 5}px;
     left: 3px;
     bottom: 2.6px;
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.white};
     border-radius: 50%;
     transition: 0.3s;
   }
 
   input:checked + span {
-    background-color: #00c853;
+    background-color: ${({ theme }) => theme.colors.brand};
   }
 
   input:checked + span:before {
