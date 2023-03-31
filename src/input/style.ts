@@ -37,6 +37,12 @@ export const StyledInput = styled.input`
   border-width: 0;
   font-size: 13px;
   background: transparent;
+  
+   ::-webkit-calendar-picker-indicator {
+    opacity: 0.4;
+    font-size: 19px;
+  }
+  
   ::placeholder {
     opacity: 0.7;
   }
