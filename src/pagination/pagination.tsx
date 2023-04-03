@@ -4,9 +4,9 @@ import P from './style'
 
 interface Props {
   entriesCount: number
-  onPaginate: Function
   itemPerPage: number
   currentPageNumber: number
+  onPaginate: (page: number) => void
 }
 
 export default function Pagination(props: Props): JSX.Element {
