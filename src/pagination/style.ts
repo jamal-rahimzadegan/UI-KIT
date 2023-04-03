@@ -9,7 +9,6 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Style the active/current link */
 
   .page-index {
     margin: 0 5px;
@@ -27,6 +26,15 @@ const Arrow = styled.button`
   margin: 0 5px;
   display: flex;
   align-items: center;
+
+  :disabled,
+  [disabled] {
+    color: ${({ theme }) => theme.colors.mediumGrey};
+
+    i {
+      color: ${({ theme }) => theme.colors.mediumGrey};
+    }
+  }
 
   .paginate-icon {
     margin: 0 7px;
