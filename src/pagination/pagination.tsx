@@ -13,7 +13,7 @@ export default function Pagination(props: Props): JSX.Element {
   const { entriesCount, onPaginate, itemPerPage, currentPageNumber } = props
 
   const numberOfPages: number = (() => {
-    const pageDivision = entriesCount / itemPerPage
+    const pageDivision = Math.floor(entriesCount / itemPerPage)
     const hasOddPageCount = entriesCount % itemPerPage > 0
     return hasOddPageCount ? pageDivision + 1 : pageDivision
   })()
