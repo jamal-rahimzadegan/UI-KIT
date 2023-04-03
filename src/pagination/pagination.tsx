@@ -64,6 +64,7 @@ export default function Pagination(props: Props): JSX.Element {
   )
 }
 
+
 // Usage: 
 // <Pagination
 //         entriesCount={20}
