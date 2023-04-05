@@ -64,29 +64,32 @@ export default function Pagination(props: Props): JSX.Element {
   )
 }
 
+/*
+function UsageExample() {
+  const ITEM_PER_PAGE: number = 5
+  const items: any[] = Array.from({ length: 21 })
+  const { slicedItems, currentPage, setCurrentPage } = usePagination({
+    itemPerPage: ITEM_PER_PAGE,
+    items,
+  })
 
-// function UsageExample() {
-//   const ITEM_PER_PAGE: number = 5
-//   const items: any[] = Array.from({ length: 21 })
-//   const [currentPage, setCurrentPage] = useState<number>(1)
-//   const OFFSET: number = currentPage * ITEM_PER_PAGE - ITEM_PER_PAGE
-//   const slicedItems: any[] = items.slice(OFFSET, OFFSET + ITEM_PER_PAGE)
+  const handlePaginate = (page: number) => {
+    setCurrentPage(page)
+  }
 
-//   const handlePaginate = (page: number) => {
-//     setCurrentPage(page)
-//   }
+  return (
+    <>
+      {slicedItems.map((product, i) => (
+        <div className='p-3'>Item - {i}</div>
+      ))}
+      <Pagination
+        entriesCount={items.length}
+        itemPerPage={ITEM_PER_PAGE}
+        currentPageNumber={currentPage}
+        onPaginate={handlePaginate}
+      />
+    </>
+  )
+}
+ */
 
-//   return (
-//     <>
-//       {slicedItems.map((product, i) => (
-//         <div className='p-3'>Item - {i}</div>
-//       ))}
-//       <Pagination
-//         entriesCount={items.length}
-//         itemPerPage={ITEM_PER_PAGE}
-//         currentPageNumber={currentPage}
-//         onPaginate={handlePaginate}
-//       />
-//     </>
-//   )
-// }
