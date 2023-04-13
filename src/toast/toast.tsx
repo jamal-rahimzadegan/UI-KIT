@@ -1,70 +1,62 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import uiSlice from '@src/store/slices/ui-slice'
-import { TOAST_SET } from './constant'
-import './style.css'
+import uiSlice from '@src/store/slices/ui-slice' // handle with state management
+import { TOAST_SET } from './toast-set'
+import T from './style'
 
 interface Props {
-  type?: 'success' | 'error' | 'info' | 'warn'
-  position?: 'top-right' | 'bottom-right' | 'top-center' | 'bottom-center'
-  title?: string
-  body?: string
-}
-
-export type ToastInfo = {
-  bgColor: string
-  icon: string
-  title: string
-  desc: string
+  position?: ToastPositionType
 }
 
 declare global {
   interface Window {
     toast: {
-      show: Function
+      show: (payload: ToastPayload) => void
       hide: Function
     }
   }
 }
 
-export type ToastSet = Record<Props['type'], ToastInfo>
-
 export default function Toast(props: Props) {
-  const { type = 'error', position } = props
-  const toast: ToastInfo = TOAST_SET[type]
-  const { isToastVisible = true } = useSelector((state: RootState) => state.ui)
+  const TIMEOUT: number = 3000
+  const { position } = props
   const dispatch = useDispatch()
-  const timeout: number = 3000
+  const { shouldShow, type, title, body } = useSelector(
+    (state: RootState) => state.ui.toast,
+  )
+  const defaultToastData = TOAST_SET[type as Toast['type']]
 
   const makeToastGlobal = () => {
     ;(window as any).toast = {
-      show: () => dispatch(uiSlice.showToast(true)),
-      hide: () => dispatch(uiSlice.showToast(false)),
+      hide: () => dispatch(uiSlice.hideToast()),
+      show: (payload: ToastPayload) => {
+        return dispatch(uiSlice.showToast({ ...payload, shouldShow: true }))
+      },
     }
   }
 
-  const closeToast = () => dispatch(uiSlice.showToast(false))
-
-  useEffect(() => {
-    if (isToastVisible) setTimeout(closeToast, timeout)
-  }, [isToastVisible])
+  const closeToast = () => window.toast.hide()
 
   useEffect(makeToastGlobal, [])
 
-  if (!isToastVisible) return <></>
+  useEffect(() => {
+    // We will automatically close the toast
+    if (!shouldShow) return
+    const closingTimeout = setTimeout(closeToast, TIMEOUT)
+    return () => clearTimeout(closingTimeout)
+  }, [shouldShow])
 
-  return (
-    <div className={`notification-container ${position}`}>
-      <div
-        style={{ background: toast.bgColor }}
-        className={`notification-content ${position}`}
-      >
-        <section>
-          <p className='notification-title'>{toast.title}</p>
-          <p className='notification-message'>{toast.desc}</p>
-        </section>
+  return shouldShow ? (
+    <T.Wrapper className={position}>
+      <T.Content bgColor={defaultToastData.bgColor}>
+        <T.TextWrapper>
+          <T.Title>{title || defaultToastData.title} </T.Title>
+          <T.Body>{body || defaultToastData.desc} </T.Body>
+        </T.TextWrapper>
         <button onClick={closeToast}>×</button>
-      </div>
-    </div>
+      </T.Content>
+    </T.Wrapper>
+  ) : (
+    <></>
   )
 }
