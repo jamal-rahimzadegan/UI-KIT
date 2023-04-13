@@ -1,4 +1,4 @@
-type ToastType = {
+type Toast = {
   shouldShow: boolean
   type: 'success' | 'error' | 'info' | 'warn'
   title: string
@@ -14,11 +14,11 @@ type ToastPositionType =
 type ToastPayload = {
   title: string
   body: string
-  type: ToastType['type']
+  type: Toast['type']
 }
 
 type ToastSet = {
-  [key in ToastType['type']]: {
+  [key in Toast['type']]: {
     bgColor: string
     icon: string
     title: string
