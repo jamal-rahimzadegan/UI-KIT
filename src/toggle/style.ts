@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components'
 
-export const Wrapper = styled.label`
+export const Wrapper = styled.div<any>`
   position: relative;
   display: inline-block;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   cursor: pointer;
+  margin-inline-end: 10px;
 
   input {
     opacity: 0;
@@ -24,7 +25,7 @@ export const Wrapper = styled.label`
     }
   }
 
-  span {
+  .toggle-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -48,9 +49,6 @@ export const Wrapper = styled.label`
   }
 
   strong {
-    position: absolute;
-    left: 100%;
-    width: max-content;
-    margin-left: 10px;
+    font-size: ${({ theme }) => theme.fontSize.medium};
   }
 `
