@@ -1,15 +1,16 @@
-import {Loading} from "./style"
+import { StyledLoader } from './style'
 
 interface props {
-    bgColor?: keyof typeof YOUR_THEME;
-    rippleColor?: keyof typeof YOUR_THEME;
-    speed?: number;
-    size?: number;
-    className?: string;
-    height?: string;
-    width?: string;
+  bgColor?: keyof Theme['colors']
+  rippleColor?: keyof Theme['colors']
+  speed?: number
+  size?: number
+  className?: string
 }
 
 export default function Spinner(props: props) {
-    return <Loading {...props} />;
+  const { bgColor = 'white', rippleColor = 'brand', ...restProps } = props
+  return (
+    <StyledLoader bgColor={bgColor} rippleColor={rippleColor} {...restProps} />
+  )
 }
