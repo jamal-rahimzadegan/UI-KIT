@@ -1,16 +1,20 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components'
 
 const spinner = keyframes`
-  to {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
     transform: rotate(360deg);
-  }`;
+  }
+`
 
-export const Loading = styled.div`
-  width: ${({ width }) => width || '35px'};
-  height: ${({ height }) => height || '35px'};
-  border: 3px solid ${({ theme, bgColor }) => theme[bgColor || 'MODAL_BG']};
+export const StyledLoader = styled.div<any>`
+  width: ${({ size }) => size || 30}px;
+  height: ${({ size }) => size || 30}px;
+  border: 4px solid ${({ theme, bgColor }) => theme.colors[bgColor]}; /* Light grey */
+  border-top: 4px solid ${({ theme, rippleColor }) => theme.colors[rippleColor]};
   border-radius: 50%;
-  border-top-color: ${({ theme, rippleColor }) => theme[rippleColor || 'APP']};
+  animation: ${spinner} 1.3s linear infinite;
   display: inline-block;
-  animation: ${spinner} 0.6s linear infinite;
-`;
+`
