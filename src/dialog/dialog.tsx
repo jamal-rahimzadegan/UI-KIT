@@ -1,9 +1,18 @@
-import styled from 'styled-components'
+import React, { ReactNode } from 'react'
+import manager from './manager'
+import D from './style'
 
-const Container = styled.dialog`
-  ::backdrop {
-    background-color: rgba(0, 0, 0, 0.4);
-  }
-`
+interface Props {
+  cb?: Function
+  className?: string
+  children: ReactNode
+}
 
-export default { Container }
+function DialogUI(props: Props): JSX.Element {
+  return <D.Container {...props} onClick={manager.closeOnBackdropClick} />
+}
+
+export default {
+  UI: DialogUI,
+  manager,
+}
