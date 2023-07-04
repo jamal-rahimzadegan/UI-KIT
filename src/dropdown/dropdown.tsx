@@ -14,7 +14,7 @@ interface Props {
   title?: string | ReactNode;
 }
 
-export default function Select(props: Props) {
+export default function Dropdown(props: Props) {
   const { onSelect, options, title, ...restProps } = props;
   const dropdownId = `dropdown-${options?.[0]?.label ?? ''}`;
   const [state, setState] = useReducer(
