@@ -1,49 +1,56 @@
-import React, { useState } from 'react';
-import { useGetDevice } from 'hooks';
+import React, { useState, TouchEvent } from 'react';
 
-let touchStartPos = 0;
-let touchStopPos = 0;
-
-interface SwipeListProps {
-  children: React.ReactNode;
+interface Props {
+  children: ReactNode[]
 }
 
-export default function SwipeList(props: SwipeListProps): JSX.Element {
-  const { isMobile } = useGetDevice();
+function SwipeList(props: Props) {
+  const { children } = props
+  const [activeTab, setActiveTab] = useState<number>(0)
+  const LAST_INDEX: number = children?.length - 1
+  const THRESHOLD: number = 75
+  let touchStartPos: number = 0
+  let touchStopPos: number = 0
 
-  const { children } = props;
-  const [activeTab, setActiveTab] = useState<number>(0);
-  // @ts-ignore
-  const lastIndex = children?.length - 1;
+  const handleTouch = (e: TouchEvent<HTMLDivElement>) => {
+    switch (e.type) {
+      case 'touchstart':
+        return (touchStartPos = e.targetTouches[0].clientX)
+      case 'touchmove':
+        return (touchStopPos = e.targetTouches[0].clientX)
+      case 'touchend':
+        if (touchStartPos - touchStopPos > THRESHOLD) return swipeLeft() // Swiped Left
+        if (touchStartPos - touchStopPos < -THRESHOLD) return swipeRight() // Swiped Right
+        break
+      default:
+        return
+    }
+  }
 
-  const prevTab = () => {
-    const shouldResetIndex = activeTab === 0;
-    const index = shouldResetIndex ? lastIndex : activeTab - 1;
-    setActiveTab(index);
-  };
+  const swipeLeft = () => {
+    const shouldResetIndex = activeTab === 0
+    const index = shouldResetIndex ? LAST_INDEX : activeTab - 1
+    setActiveTab(index)
+  }
 
-  const nextTab = () => {
-    const shouldResetIndex = activeTab === lastIndex;
-    const index = shouldResetIndex ? 0 : activeTab + 1;
-    setActiveTab(index);
-  };
-
-  const handleTouchEnd = () => {
-    // run on left swipe
-    if (touchStartPos - touchStopPos > 75) prevTab();
-
-    // run on right swipe
-    if (touchStartPos - touchStopPos < -75) nextTab();
-  };
+  const swipeRight = () => {
+    const shouldResetIndex = activeTab === LAST_INDEX
+    const index = shouldResetIndex ? 0 : activeTab + 1
+    setActiveTab(index)
+  }
 
   return (
     <div
-      className="center-items w-100 h-100"
-      onTouchStart={(e) => (touchStartPos = e.targetTouches[0].clientX)}
-      onTouchMove={(e) => (touchStopPos = e.targetTouches[0].clientX)}
-      onTouchEnd={handleTouchEnd}
+      onTouchStart={handleTouch}
+      onTouchMove={handleTouch}
+      onTouchEnd={handleTouch}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}
     >
       {children[activeTab]}
     </div>
-  );
+  )
 }
