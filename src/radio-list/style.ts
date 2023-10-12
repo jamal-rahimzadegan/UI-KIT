@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { FONT_SIZES } from 'constant';
-import Card from '../Card/Card';
 
 const BOX_SIZE = '15px';
 
@@ -16,7 +15,7 @@ export const RadioContainer = styled.form`
       : null};
 `;
 
-export const RadioItem = styled(Card)`
+export const RadioItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
