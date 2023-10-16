@@ -18,7 +18,7 @@ export default function OtpInput(props: Props) {
       return
     }
 
-    if (val != '') {
+    if (val !== '') {
       const nextElement = target.nextElementSibling as HTMLInputElement
       if (nextElement) nextElement.focus()
     }
