@@ -10,15 +10,15 @@ export default function OtpInput(props: Props) {
   const { className = '', length = 4 } = props
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const target = e.target
-    const val = target.value
+    const { target } = e
+    const { value } = target
 
-    if (isNaN(+val)) {
+    if (isNaN(+value)) {
       target.value = ''
       return
     }
 
-    if (val !== '') {
+    if (value !== '') {
       const nextElement = target.nextElementSibling as HTMLInputElement
       if (nextElement) nextElement.focus()
     }
