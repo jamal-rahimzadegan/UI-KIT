@@ -1,13 +1,5 @@
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 import { InputsContainer } from './style'
-
-/*
-To Improve:
-
-Add left/right moving support
-styling
-
- */
 
 interface Props {
   className?: string
@@ -17,7 +9,7 @@ interface Props {
 export default function OtpInput(props: Props) {
   const { className = '', length = 4 } = props
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target
     const val = target.value
 
@@ -27,19 +19,19 @@ export default function OtpInput(props: Props) {
     }
 
     if (val != '') {
-      const nextElement = target.nextElementSibling
-      if (nextElement) (nextElement as HTMLInputElement).focus()
+      const nextElement = target.nextElementSibling as HTMLInputElement
+      if (nextElement) nextElement.focus()
     }
   }
 
-  const handleKeyUp = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const key = e.key.toLowerCase()
     const target: HTMLInputElement = e.target as HTMLInputElement
 
     if (key == 'backspace' || key == 'delete') {
       target.value = ''
-      const prevElement = target.previousElementSibling
-      if (prevElement) (prevElement as HTMLInputElement).focus()
+      const prevElement = target.previousElementSibling as HTMLInputElement
+      if (prevElement) prevElement.focus()
     }
   }
 
@@ -49,7 +41,7 @@ export default function OtpInput(props: Props) {
         <input
           key={(length + i).toString()}
           onChange={handleChange}
-          onKeyUp={handleKeyUp}
+          onKeyDown={handleKeyDown}
           type='text'
           inputMode='numeric'
           maxLength={1}
