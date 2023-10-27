@@ -1,3 +1,5 @@
+import { Container } from './style';
+
 interface Props {
   label: string
   min?: number
