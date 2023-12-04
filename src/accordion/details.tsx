@@ -2,7 +2,7 @@ interface Props extends Partial<HTMLDetailsElement> {
   info: string;
 }
 
-export default function Accordion(props: Props) {
+export default function Details(props: Props) {
   const { title, info, ...restProps } = props;
 
   return (
