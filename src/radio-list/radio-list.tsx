@@ -1,31 +1,35 @@
 import { RadioContainer } from './style';
 
+type Item = { label: string; value: string | number };
+
 interface Props {
-  data: Array<{ label: string; value: string | number }>;
-  onChange: (value: string) => void;
+  data: Array<Item>;
+  onChange: (value: string | number, item: Item) => void;
   className?: string;
   labelColor?: string;
   labelSize?: string;
+  selected: Item['value'];
 }
 
-export default function RadioList(props: Props): JSX.Element {
-  const { data, onChange, labelSize, labelColor, className = '' } = props;
+export default function RadioList(props: Props) {
+  const { data = [], onChange, labelSize, labelColor, className = '', selected } = props;
 
-  if (!data?.length) return <></>;
+  if (!data.length) return <></>;
 
   return (
-    <form className={className}>
-      {data.map(({ value, label }) => (
+    <div className={className}>
+      {data.map(({ value, label }, i) => (
         <RadioContainer key={value} labelSize={labelSize} labelColor={labelColor}>
           <input
-            type="radio"
             value={value}
+            type="radio"
+            checked={selected === value}
             name={label}
-            onChange={(e) => onChange(e.target.value)}
+            onChange={() => onChange(value, data[i])}
           />
           <label>{label}</label>
         </RadioContainer>
       ))}
-    </form>
+    </div>
   );
 }
